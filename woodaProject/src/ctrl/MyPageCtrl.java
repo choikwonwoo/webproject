@@ -1,7 +1,7 @@
 package ctrl;
 
 import java.io.*;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import svc.*;
@@ -16,8 +16,13 @@ public class MyPageCtrl extends HttpServlet {
     }
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		MyPageSvc  myPageSvc = new MyPageSvc();
-		myPageSvc.getMemberInfo();
+		String mimail = request.getParameter("mimail"); //my_page.jsp form 에서 받아와야 해
+		
+		MyPageSvc myPageSvc = new MyPageSvc();
+		MemberInfo memberInfo = myPageSvc.getMemberInfo(mimail);
+		request.setAttribute("memberInfo", memberInfo);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("my_page.jsp");
+		dispatcher.forward(request, response);
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
