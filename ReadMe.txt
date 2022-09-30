@@ -8,6 +8,7 @@ s응?
 
 통신 테스트
 
+<<<<<<< HEAD
 09 / 30 : 권우
 세인누나 저희 로그인 확인 이전 방법이랑 똑같이 하겠습니다.!!
 <%
@@ -17,3 +18,6 @@ boolean isLogin = false;
 if (loginInfo != null)   isLogin = true;
 %>
 0930 : 최권우 기본파일 커밋 했어요
+=======
+세영 가입
+>>>>>>> 45838ce60aedde61d31f3332caf8eab157ed1734
