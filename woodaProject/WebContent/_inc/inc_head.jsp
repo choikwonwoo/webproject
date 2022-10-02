@@ -14,12 +14,13 @@ if (loginInfo != null)   isLogin = true;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-body, th, td, div, p { font-size:12px; }
-a:link{ text-decoration:none; color:black; }
-a:visited{ text-decoration:none; color:black; }
-a:hover{ text-decoration:underline; color:red; }
-.hand { cursor:painter; }
-.bold {font-weight:bold;}
+body, th, td, div, p { font-size:20px; }
+a:link { text-decoration:none; color:black; }
+a:visited { text-decoration:none; color:black; }
+a:hover { text-decoration:underline; color:red; }
+#logo { font-weight:bold; color:brown; }
+.hand { cursor:pointer; }
+.bold { font-weight:bold; }
 </style>
 <script src="/mvcSite/js/jquery-3.6.1.js"></script>
 <script>
