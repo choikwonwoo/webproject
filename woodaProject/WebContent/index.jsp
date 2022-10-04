@@ -10,13 +10,22 @@
 <body>
 <h2>메인 페이지</h2>
 
-<!-- 얘도 나중 로그인 폼으로 보내야 함 -->
-a
-<% if (isLogin) {%>
-<a href = "my_page">마이페이지</a>&nbsp;&nbsp;&nbsp;&nbsp; 
-<% }else { %>
-<a href = "login_form.jsp">로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-<% } %>
+<!-- 얘도 나중에 로그인 폼으로 보내야 함 -->
+
 <hr/>
+<div id="wrapper" border="1" align="center" style="margin-top:100px;">
+	<div id="trip" align="left" style="height:500px; font-size:20px;">
+	인기 여행지
+	</div>
+	<div id="board" align="left" style="height:500px; font-size:20px;">
+	추천 게시물
+	</div>
+	<div id="gift">
+	</div>
+	<div id="logo">
+	</div>
+	<div id="desc">
+	</div>
+</div>
 </body>
 </html>
