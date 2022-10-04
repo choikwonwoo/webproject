@@ -17,8 +17,12 @@ if (!isLogin){
 <script>
 function btnClick(msg){
 	if(msg =='y'){
-		document.frmSend.submit();
-		window.close();
+		if($("#dupChk").val()=='y'){
+			document.frmSend.submit();
+			window.close();
+		} else {
+			alert("존재하지 않는 이메일 입니다.");
+		}
 	} else
 		window.close();
 }
@@ -31,7 +35,9 @@ function chkDupId(uid){
 			var msg = " ";// 사용자엑세 보여줄 메세지
 			if (chkRs==0){ // uiod롸 동일한 아이디가 없으면
 				msg="<span>존재하지 않는 이메일.</span>"
-			} 
+			} else{
+				$("#dupChk").val('y');
+			}
 			$("#idMsg").html(msg);	
 		}
 	});
@@ -40,7 +46,8 @@ function chkDupId(uid){
 </head>
 <body>
 
-<form name="frmSend" action="actSend">
+<form name="frmSend" action="sendUp">
+<input type="hidden" id="dupChk" value="n"/>
 <table width="390" height="380" Style="border:solid 1px black; margin-left:auto; margin-right:auto; text-align:center">
 <tr><td id="sendTitle">우리들의 다이어리</td></tr>
 <tr><td id="sendInfoMsg">등록할 연인의 정보를 입력해주세요.</td></tr>
