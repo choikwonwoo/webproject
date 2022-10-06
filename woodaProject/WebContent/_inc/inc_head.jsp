@@ -1,12 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.*" %>
-<%@ page import="vo.*" %>
+<%@ page import = "vo.*" %>
 <%
 MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
-// session을 MembeInfo로 형변환하여 loginInfo 인스턴스에 저장
-boolean isLogin = false;
-if (loginInfo != null)   isLogin = true;
+boolean isLogin = false; 
+if (loginInfo != null) isLogin = true;
 %>
 <!DOCTYPE html>
 <html>
@@ -14,61 +13,85 @@ if (loginInfo != null)   isLogin = true;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-body, th, td, div, p { font-size:20px; }
-a:link { text-decoration:none; color:black; }
-a:visited { text-decoration:none; color:black; }
-a:hover { text-decoration:underline; color:red; }
-#logo { font-weight:bold; color:brown; }
-.hand { cursor:pointer; }
-.bold { font-weight:bold; }
-#topmenu {
-  position: fixed; top: 0; left: 0; right: 0; height: 30px; padding: 1rem; color: white;
-  background: #ffea92; font-weight: bold; display: flex; justify-content: space-between;
-  align-items: center; align-text:center; 
+/* Base */
+html {
+	font-family: "Ropa Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+	font-size: 16px; line-height: 1.5;
 }
-#topmenu p { width:1150px; text-align:center; font-size:20px; }
-#wrapper { width:99%; align:center; margin:0; }
-#trip { width:90%; border:1px black solid; margin:30px 0 30px 0; }
-#board { width:90%; border:1px black solid; }
+body {
+	margin:0; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); 
+	min-width: 1150px;
+}
+h1, h2, h3, p, ul { margin: 0; }
+ul { padding-left: 0; }
+ul li { list-style-type: none; }
+a { color: inherit; text-decoration: none; } 
+li a:hover { background: #333; color: #fff; }
+img { vertical-align: middle; }
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
 
-</style>
-<script src="/mvcSite/js/jquery-3.6.1.js"></script>
-<script>
-function onlyNum(obj){ // 이거 키보드 입력 할 때 숫자만 받아오게 하는 함수 인데 일단 두겠습니다.!
-	if (isNaN(obj.value)){
-		obj.value = "";
-	}
+/* Work section */
+.work-section {
+	background-color: #ffea92; position: relative; z-index: 10; 
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
-</script>
+.no-boxshadow .work-section { border-bottom: 1px solid rgb(24, 24, 24);}
+.work-section .section-header {
+	background:111; line-height: 70px; 
+	text-transform: uppercase; position: relative;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+	
+}
+.no-boxshadow .work-section .section-header {
+	border-top: 1px solid rgb(204, 204, 204);
+}
+.work-section .section-header > .inner {
+	margin: auto; width: 1150px; position: relative;
+}
+.work-section h2 {
+	float: left; font-size: 30px; font-weight: normal; letter-spacing: 1px;
+}
+.work-section .tabs-nav {
+		border-left: 1px solid rgb(218, 218, 218); float: right; letter-spacing: 1px;
+		-webkit-box-shadow: inset 1px 0 rgb(255, 255, 255);
+				box-shadow: inset 1px 0 rgb(255, 255, 255);
+	}
+.work-section .tabs-nav li {
+		border-right: 1px solid rgb(218, 218, 218); float: left; position: relative;
+		-webkit-box-shadow: 1px 0 rgb(255, 255, 255);
+				box-shadow: 1px 0 rgb(255, 255, 255);
+	}
+.work-section .tabs-nav a {
+		display: block; outline: none; position: relative; text-align: center;
+		width: 120px; z-index: 10;
+	}
+.work-section .tabs-nav .ui-tabs-active a { color: rgb(255, 255, 255); }
+.work-section {  position:sticky; top:0px;}
+</style>
+
 </head>
 <body>
-
-<div id="topmenu">
-	<p>
-		<a href="main_wooda" id="logo"><span>Woo Da</span></a>
-		<a href="main_wooda" class="bold" id="retrip">여행지 추천</a>
-		<a href="diary_write_in.jsp" class="bold" id="diary_in">다이어리 쓰기</a>
-		<a href="diary_write_view" class="bold" id="diary_view">다이어리 공유</a>
-		<a href="/wooDa/gift" class="bold" id="gift_view">선물추천</a>
-
-		<% if (isLogin) {%>
-		<a href = "my_page">프로필</a>&nbsp;&nbsp;&nbsp;&nbsp; 
-		<% }else { %>
-		 <!-- 로그인이 안 된 상태이면 -->
-		<a href = "login_form.jsp" class="bold">로그인</a>
-		<% } %>
-		
-
-	</p>
-</div>
-
-
-
-
-
-
-</body>
-</html>
-
-
+<section class="work-section" id="work">
+	<header class="section-header">
+			<div class="inner clearfix">
+				<h2>Woo Da</h2>
+				<ul class="tabs-nav">
+					<li><a href="#work01">여행지 추천</a></li>
+					<li><a href="#work02">다이어리 쓰기</a></li>
+					<li><a href="#work03">다이어리 공유</a></li>
+					<li><a href="#work04">선물추천</a></li>
+					<% if (isLogin) {%>
+					<li><a href = "my_page">프로필</a></li>
+					<% } else { %>
+					 <!-- 로그인이 안 된 상태이면 -->
+					<li><a href = "login_form.jsp" class="bold">로그인</a></li>
+					<% } %>
+				</ul>
+				<span class="tabs-highlight"></span>
+			</div>
+	</header>
+</section>
 
