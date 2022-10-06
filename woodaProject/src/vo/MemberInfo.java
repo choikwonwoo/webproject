@@ -1,7 +1,7 @@
 package vo;
 
 public class MemberInfo {
-	private String mi_mail, mi_nick, mi_pw, mi_name, mi_birth, mi_gender, mi_pimg, mi_iscouple , mi_status , mi_join , mi_last , ci_idx;
+	private String mi_mail, mi_nick, mi_pw, mi_name, mi_birth, mi_gender, mi_pimg, mi_iscouple , mi_status , mi_join , mi_last , ci_idx, mi_dding;
 
 	public String getMi_mail() {
 		return mi_mail;
@@ -97,6 +97,14 @@ public class MemberInfo {
 
 	public void setCi_idx(String ci_idx) {
 		this.ci_idx = ci_idx;
+	}
+
+	public String getMi_dding() {
+		return mi_dding;
+	}
+
+	public void setMi_dding(String mi_dding) {
+		this.mi_dding = mi_dding;
 	}
 
 }

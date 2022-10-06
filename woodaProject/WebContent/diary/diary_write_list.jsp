@@ -1,13 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ include file="../_inc/inc_head.jsp" %>
-<%
-
-// 회원 전용 페이지 로그인 확인
-if (!isLogin){
-	out.println("<script> alert('로그인 전용 페이지 입니다.'); location.href='login_form.jsp'; </script>");
-	out.close();
-}
-%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.*" %>
+<%@ page import="vo.*" %>
 <%
 request.setCharacterEncoding("utf-8");
 ArrayList<BorderInfo> borderList = (ArrayList<BorderInfo>)request.getAttribute("borderList");
@@ -31,76 +26,24 @@ args = "&cpage=" + cpage + schargs;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-hr {width:1150px;}
-#list th { border-bottom:double black 3px; }
-#profileImg {width: 150px; height: 150px; }
-#profileDiv {width: 150px; height: 150px;  border-radius: 70%; overflow: hidden;}
-#profileZone { height:350px; background-color:lightgreen;}
-#couplePostZone { height:350px; background-color:lightgreen;}
-fieldset {border:0;}
-table {border:solid 1px black; width:1150px; height:330px; margin-left:auto; margin-right:auto; text-align:center;}
-</style>
-<Script>
-var openWin;            
-function openSendCard() {
-    var _width = '650';
-    var _height = '380';
-	// window.name = "부모창 이름";  
- 	window.name = "myPage";  
-    // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
-    var _left = Math.ceil(( window.screen.width - _width )/2);
-    var _top = Math.ceil(( window.screen.height - _height )/2); 
- 	// window.open("open할 window", "자식창 이름", "팝업창 옵션");
-    openWin = window.open("mypage/send_card.jsp","sendCard","top=" + _top + ",left=" + _left + ",width=400,height=400");
- 
+body{
+    background-color: var(--color-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-</Script>
+#list th, #list td { padding:8px 3px; }
+#list th { border-bottom:double black 3px; }
+#list td { border-bottom:dotted black 1px; }
+</style>
 </head>
 <body>
-<h2>마이 페이지</h2>
-<div id="profileZone">
-<table id="profileTable" border="1">
-<tr>
-<td rowspan="3" width="40%"><div id="profileDiv"><img id="profileImg" src="img/basic_profile.png"/></div></td><td align="left"><%=loginInfo.getMi_name() %></td><td rowspan="3" width="15%">나의일기</td><td rowspan="3" width="15%">너의일기</td>
-</tr>
-<tr>
-<td align="left"><%=loginInfo.getMi_mail() %></td>
-</tr>
-<tr>
-<td align="left"><input type="button" value="연인을 등록하세요" onclick="openSendCard()"/></td>
-</tr>
-</table>
-<input type=button name=profileModify value="프로필 수정" />
-</div>
-<hr/>
-<div id="couplePostZone">
-<div  style="margin:auto;text-align:center;">
-<form name="frmSch" method="get" style="width:1150px; display:inline-block;">
-<fieldset>
-	<legend>게시판 검색</legend>
-	<select name="schtype">
-		<option value="">검색 조건</option>
-		<option value="title" 
-		<% if (schtype.equals("title")) { %>selected="selected"<% } %>>제목</option>
-		<option value="content" 
-		<% if (schtype.equals("content")) { %>selected="selected"<% } %>>내용</option>
-		<option value="nick" 
-		<% if (schtype.equals("nick")) { %>selected="selected"<% } %>>작성자</option>
-		<option value="tc" 
-		<% if (schtype.equals("tc")) { %>selected="selected"<% } %>>제목+내용</option>
-	</select>
-	<input type="text" name="keyword" value="<%=keyword %>" />
-	<input type="submit" value="검색" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="button" value="전체글" onclick="location.href='diary_write';" />
-</fieldset>
-</form>
-</div>
-<table height="30" border="0" cellpadding="0" cellspacing="0" id="list">
-<tr height="12">
+<h2>자유 게시판 목록</h2>
+<table width="700" border="0" cellpadding="0" cellspacing="0" id="list">
+<tr height="30">
 <th width="10%">글 번호</th><th width="30%">사진</th><th width="*">제목 + 날짜 + 코스</th>
-
-
-
+</tr>
 <%
 if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 	int num = rcnt - (psize * (cpage - 1));
@@ -115,7 +58,7 @@ if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 <tr align="center">
 <a href="free_view">
 <td width="10%" rowspan="3"><%=num %></td>
-<td width="30%" rowspan="3"><%=img1 %></td>
+<td width="30%" rowspan="3"><img src="/img/<%=bl.getBs_img1() %>" /></td>
 <td ><%=title %></td>
 </tr>
 <tr align="center" width="*">
@@ -136,11 +79,15 @@ if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 		num--;
 	}
 } else {	// 글목록이 없으면
-	out.println("<tbody><tr height='300'><td colspan='5' align='center'>검색결과가 없습니다.</td></tr></tbody>");
+	out.println("<tr height='50'><td colspan='5' align='center'>");
+	out.println("검색결과가 없습니다.</td></tr>");
 }
 %>
 </table>
 <br />
+<table width="700" cellpadding="5">
+<tr>
+<td width="600">
 <%
 if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 	String lnk = "diary_write_list?cpage=";
@@ -173,6 +120,32 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 	}
 }
 %>
-</div>
+</td>
+<td width="*" align="right">
+	<input type="button" value="글 등록" onclick="location.href='diary/diary_write_in.jsp';" />
+</td>
+</tr>
+<tr><td colspan="2">
+	<form name="frmSch" method="get">
+	<fieldset>
+		<legend>게시판 검색</legend>
+		<select name="schtype">
+			<option value="">검색 조건</option>
+			<option value="title" 
+			<% if (schtype.equals("title")) { %>selected="selected"<% } %>>제목</option>
+			<option value="content" 
+			<% if (schtype.equals("content")) { %>selected="selected"<% } %>>내용</option>
+			<option value="nick" 
+			<% if (schtype.equals("nick")) { %>selected="selected"<% } %>>작성자</option>
+			<option value="tc" 
+			<% if (schtype.equals("tc")) { %>selected="selected"<% } %>>제목+내용</option>
+		</select>
+		<input type="text" name="keyword" value="<%=keyword %>" />
+		<input type="submit" value="검색" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="button" value="전체글" onclick="location.href='diary_write_list';" />
+	</fieldset>
+	</form>
+</td></tr>
+</table>
 </body>
 </html>

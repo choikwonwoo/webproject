@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../_inc/inc_head.jsp" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.*" %>
+<%@ page import="vo.*" %>
+<%
+MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+// session을 MembeInfo로 형변환하여 loginInfo 인스턴스에 저장
+boolean isLogin = false;
+if (loginInfo != null)   isLogin = true;
+%>
 <%
 // 연인 등록을 위한 이메일 보내기
 // 입력  : 이메일, 짧은 메세지, d+day, 
 // 동작 : 확인 버튼 누르면 post 후 창닫기
-if (!isLogin){
+if (!isLogin){ // 연인등록을 이미 보내거나 받은경우  버튼 보이지 않기
 	out.println("<script> alert('잘못된 경로입니다.'); history.back(); </script>");
 	out.close();
 }
@@ -14,12 +22,12 @@ if (!isLogin){
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="/mvcSite/js/jquery-3.6.1.js"></script>
 <script>
 function btnClick(msg){
 	if(msg =='y'){
 		if($("#dupChk").val()=='y'){
 			document.frmSend.submit();
-			window.close();
 		} else {
 			alert("존재하지 않는 이메일 입니다.");
 		}
@@ -46,8 +54,10 @@ function chkDupId(uid){
 </head>
 <body>
 
-<form name="frmSend" action="sendUp">
+<form name="frmSend" action="../card" method="post">
 <input type="hidden" id="dupChk" value="n"/>
+<input type="hidden" id="writerEmail" name="writerEmail" value="<%=loginInfo.getMi_mail()%>"/>
+<input type="hidden" id="dding" name="dding" value="<%=loginInfo.getMi_dding()%>"/>
 <table width="390" height="380" Style="border:solid 1px black; margin-left:auto; margin-right:auto; text-align:center">
 <tr><td id="sendTitle">우리들의 다이어리</td></tr>
 <tr><td id="sendInfoMsg">등록할 연인의 정보를 입력해주세요.</td></tr>

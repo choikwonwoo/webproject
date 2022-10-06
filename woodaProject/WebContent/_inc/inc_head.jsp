@@ -80,8 +80,8 @@ img { vertical-align: middle; }
 				<h2>Woo Da</h2>
 				<ul class="tabs-nav">
 					<li><a href="#work01">여행지 추천</a></li>
-					<li><a href="#work02">다이어리 쓰기</a></li>
-					<li><a href="#work03">다이어리 공유</a></li>
+					<li><a href="/woodaProject/diary/diary_write_in.jsp">다이어리 쓰기</a></li>
+               		<li><a href="/woodaProject/diary_write_list">다이어리 공유</a></li>
 					<li><a href="#work04">선물추천</a></li>
 					<% if (isLogin) {%>
 					<li><a href = "my_page">프로필</a></li>

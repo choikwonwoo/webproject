@@ -2,7 +2,7 @@ package ctrl;
 
 import java.io.*;
 import javax.servlet.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import svc.*;
 import vo.*;
@@ -16,25 +16,44 @@ public class BoderProcInCtrl extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String bs_title = request.getParameter("bs_title");
-		String bs_content = request.getParameter("bs_content");
+		String bs_title = request.getParameter("bs_title").trim().replace("'", "''").replace("<", "&lt;");
+		String bs_content = request.getParameter("bs_content").trim().replace("'", "''").replace("<", "&lt;");
 		String bs_area = request.getParameter("bs_area");
 		String bs_start = request.getParameter("bs_start");
 		String bs_end = request.getParameter("bs_end");
-		String bs_place1 = request.getParameter("bs_place1");
-		String bs_place2 = request.getParameter("bs_place2");
-		String bs_place3 = request.getParameter("bs_place3");
+		String bs_place1 = "";
+		String bs_place2 = "";
+		String bs_place3 = "";
+		double bs_lat1 = 0;
+		double bs_lat2 = 0;
+		double bs_lat3 = 0;
+		double bs_lng1 = 0;
+		double bs_lng2 = 0;
+		double bs_lng3 = 0;
+		if(request.getParameter("bs_place1") != null)  bs_place1 = request.getParameter("bs_place1");
+
+		if(request.getParameter("bs_place2") != null)  bs_place2 = request.getParameter("bs_place2");
+		
+		if(request.getParameter("bs_place3") != null)  bs_place3 = request.getParameter("bs_place3");
+
+		if(request.getParameter("bs_lat1") != null)  bs_lat1 = Double.parseDouble(request.getParameter("bs_lat1"));
+		
+		if(request.getParameter("bs_lat2") != null)  bs_lat2 = Double.parseDouble(request.getParameter("bs_lat2"));
+		
+		if(request.getParameter("bs_lat3") != null)  bs_lat3 = Double.parseDouble(request.getParameter("bs_lat3"));
+		
+		if(request.getParameter("bs_lng1") != null)  bs_lng1 = Double.parseDouble(request.getParameter("bs_lng1"));
+		
+		if(request.getParameter("bs_lng2") != null)  bs_lng2 = Double.parseDouble(request.getParameter("bs_lng2"));
+		
+		if(request.getParameter("bs_lng3") != null)  bs_lng3 = Double.parseDouble(request.getParameter("bs_lng3"));
+				
 		String bs_astatus = request.getParameter("bs_astatus");
 		String bs_cstatus = request.getParameter("bs_cstatus");
-		double bs_lat1 = Double.parseDouble(request.getParameter("bs_lat1"));
-		double bs_lng1 = Double.parseDouble(request.getParameter("bs_lng1"));
-		double bs_lat2 = Double.parseDouble(request.getParameter("bs_lat2"));
-		double bs_lng2 = Double.parseDouble(request.getParameter("bs_lng2"));
-		double bs_lat3 = Double.parseDouble(request.getParameter("bs_lat3"));
-		double bs_lng3 = Double.parseDouble(request.getParameter("bs_lng3"));
 		String bs_img1 = request.getParameter("bs_img1");
 		String bs_visit = request.getParameter("bs_visit");
 		String bs_gender = request.getParameter("bs_gender");
+			
 		BorderInfo borderInfo = new BorderInfo();
 		borderInfo.setBs_title(bs_title);		borderInfo.setBs_content(bs_content);
 		borderInfo.setBs_area(bs_area);		borderInfo.setBs_start(bs_start);
