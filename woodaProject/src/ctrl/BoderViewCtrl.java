@@ -27,7 +27,7 @@ public class BoderViewCtrl extends HttpServlet {
 			// request객체에 'borderInfo'라는 이름의 속성을 borderInfo 값을 가지게 하여 선언 및 생성
 
 			RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("diary_write_view.jsp");
+				request.getRequestDispatcher("diary/diary_write_view.jsp");
 			dispatcher.forward(request, response);
 			// Redirect 방식이 아닌 Dispatcher 방식으로 이동 시킴
 			// Dispatcher 방식으로 이동하므로 url이 변경되지 않고, 

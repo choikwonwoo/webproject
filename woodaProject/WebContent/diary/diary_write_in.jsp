@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../_inc/inc_head.jsp" %>
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </script>
@@ -96,13 +96,13 @@ body{
     align-items: center;
 }
 textarea {
-	width:1000px; height=50px;
+	width:700px; height=50px;
 }
 </style>
 </head>
 <body>
-<form name="frm" action="write_proc_in" method="post">
-<table width="900px" border="1";>
+<form name="frm" action="../write_proc_in" method="post">
+<table width="700px" border="1">
 <tr>
 <th width=40px">제목  </th>
 <td> <input type="text" name="bs_title" value="" placeholder="제목을 입력하세여" style="width:*;"/> </td>

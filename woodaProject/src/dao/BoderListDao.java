@@ -49,7 +49,7 @@ public class BoderListDao {
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = "select bs_num, bs_img1, bs_title, bs_start, bs_end, bs_place1, bs_place2, bs_place3 from t_board_story where bs_astatus = 'y' "
+			String sql = "select bs_num, bs_img1, bs_title, bs_start, bs_end, bs_place1, bs_place2, bs_place3 from t_board_story  "
 			+ where + " order by bs_num desc " + 
 			" limit " + ((cpage - 1) * psize) + ", " + psize;
 			rs = stmt.executeQuery(sql);

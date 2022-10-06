@@ -32,11 +32,13 @@ args = "&cpage=" + cpage + schargs;
 <title>Insert title here</title>
 <style>
 hr {width:1150px;}
+#list th { border-bottom:double black 3px; }
 #profileImg {width: 150px; height: 150px; }
 #profileDiv {width: 150px; height: 150px;  border-radius: 70%; overflow: hidden;}
 #profileZone { height:350px; background-color:lightgreen;}
 #couplePostZone { height:350px; background-color:lightgreen;}
-#profileTable {border:solid 1px black; width:1150px; height:330px; margin-left:auto; margin-right:auto; text-align:center;}
+fieldset {border:0;}
+table {border:solid 1px black; width:1150px; height:330px; margin-left:auto; margin-right:auto; text-align:center;}
 </style>
 <Script>
 var openWin;            
@@ -72,10 +74,33 @@ function openSendCard() {
 </div>
 <hr/>
 <div id="couplePostZone">
-<table width="700" border="0" cellpadding="0" cellspacing="0" id="list">
-<tr height="30">
+<div  style="margin:auto;text-align:center;">
+<form name="frmSch" method="get" style="width:1150px; display:inline-block;">
+<fieldset>
+	<legend>게시판 검색</legend>
+	<select name="schtype">
+		<option value="">검색 조건</option>
+		<option value="title" 
+		<% if (schtype.equals("title")) { %>selected="selected"<% } %>>제목</option>
+		<option value="content" 
+		<% if (schtype.equals("content")) { %>selected="selected"<% } %>>내용</option>
+		<option value="nick" 
+		<% if (schtype.equals("nick")) { %>selected="selected"<% } %>>작성자</option>
+		<option value="tc" 
+		<% if (schtype.equals("tc")) { %>selected="selected"<% } %>>제목+내용</option>
+	</select>
+	<input type="text" name="keyword" value="<%=keyword %>" />
+	<input type="submit" value="검색" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="button" value="전체글" onclick="location.href='diary_write';" />
+</fieldset>
+</form>
+</div>
+<table height="30" border="0" cellpadding="0" cellspacing="0" id="list">
+<tr height="12">
 <th width="10%">글 번호</th><th width="30%">사진</th><th width="*">제목 + 날짜 + 코스</th>
-</tr>
+
+
+
 <%
 if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 	int num = rcnt - (psize * (cpage - 1));
@@ -111,15 +136,11 @@ if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 		num--;
 	}
 } else {	// 글목록이 없으면
-	out.println("<tr height='50'><td colspan='5' align='center'>");
-	out.println("검색결과가 없습니다.</td></tr>");
+	out.println("<tbody><tr height='300'><td colspan='5' align='center'>검색결과가 없습니다.</td></tr></tbody>");
 }
 %>
 </table>
 <br />
-<table width="700" cellpadding="5">
-<tr>
-<td width="600">
 <%
 if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 	String lnk = "diary_write_list?cpage=";
@@ -152,33 +173,6 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 	}
 }
 %>
-</td>
-<td width="*" align="right">
-	<input type="button" value="글 등록" onclick="location.href='diary_write_in.jsp';" />
-</td>
-</tr>
-<tr><td colspan="2">
-	<form name="frmSch" method="get">
-	<fieldset>
-		<legend>게시판 검색</legend>
-		<select name="schtype">
-			<option value="">검색 조건</option>
-			<option value="title" 
-			<% if (schtype.equals("title")) { %>selected="selected"<% } %>>제목</option>
-			<option value="content" 
-			<% if (schtype.equals("content")) { %>selected="selected"<% } %>>내용</option>
-			<option value="nick" 
-			<% if (schtype.equals("nick")) { %>selected="selected"<% } %>>작성자</option>
-			<option value="tc" 
-			<% if (schtype.equals("tc")) { %>selected="selected"<% } %>>제목+내용</option>
-		</select>
-		<input type="text" name="keyword" value="<%=keyword %>" />
-		<input type="submit" value="검색" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" value="전체글" onclick="location.href='diary_write';" />
-	</fieldset>
-	</form>
-</td></tr>
-</table>
 </div>
 </body>
 </html>

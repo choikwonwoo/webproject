@@ -1,16 +1,165 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.*" %>
+<%@ page import="vo.*" %>
+<%
+request.setCharacterEncoding("utf-8");
+BorderInfo borderInfo = (BorderInfo)request.getAttribute("borderInfo");
+
+int idx = Integer.parseInt(request.getParameter("idx"));
+// 페이지 번호를 얻기 위하여 생성
+int cpage = Integer.parseInt(request.getParameter("cpage"));
+// 현재 페이지 번호를 받기위하여 cpage번호 생성
+
+String args = "?cpage=" + cpage;
+// 위에서 받은 cpage변수를 사용하여 url에 사용할 쿼리스트링을 저장
+
+String schtype = request.getParameter("schtype");	// 검색조건
+String keyword = request.getParameter("keyword");	// 검색어
+if (schtype != null && keyword != null && !schtype.equals("") && !keyword.equals("")) {
+	// 검색조건(schtype)과 검색어(keyword)가 null이 아니고, 빈 문자열도 아니면
+	keyword = keyword.trim().replace("'", "''");
+	args += "&schtype=" + schtype + "&keyword=" + keyword;
+	// 다른 링크들 에서도 검색 관련 값들을 쿼리스트링으로 연결해줌
+}
+
+String upLink = "", delLink = "",	reportLink = "";	// 수정과 삭제용 링크를 저장할 변수
+upLink = "free_form_up" + args + "&idx=" + idx;
+delLink = "free_proc_del?idx=" + idx;
+reportLink = "diary/report.jsp?idx=" + idx;
+%>
+<%
+String bs_area = "";
+switch(borderInfo.getBs_area()){
+case "a" : bs_area = "서울";
+	break;
+case "b" : bs_area = "경기";
+break;
+case "c" : bs_area = "강원";
+break;
+case "d" : bs_area = "인천";
+break;
+case "e" : bs_area = "강릉";
+break;
+case "f" : bs_area = "대구";
+break;
+case "g" : bs_area = "울산";
+break;
+case "h" : bs_area = "부산";
+break;
+case "i" : bs_area = "제주";
+break;
+default:
+	bs_area = "기타지역";
+}
+
+String bs_gender = "";
+switch(borderInfo.getBs_gender()){
+case "m" : bs_gender = "남자";
+break;
+case "w" : bs_gender = "여자";
+break;
+}
+
+String bs_visit = "";
+switch(borderInfo.getBs_visit()){
+case "y" : bs_visit = "재방문 의사 있음";
+break;
+case "n" : bs_visit = "재방문 의사 없음";
+break;
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>여러개 마커에 이벤트 등록하기2</title>
-    
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+
+td{ width:*; text-align:center }
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+textarea {
+	width:1000px; height=50px;
+}
+</style>
+<script>
+var popupWidth = 500;
+var popupHeight = 300;
+
+var popupX = (window.screen.width / 2) - (popupWidth / 2);
+// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+var popupY= (window.screen.height / 2) - (popupHeight / 2);
+var idx = 0;
+idx = <%=idx %>;
+function showPopup()
+{ 
+	window.name = "parentForm";
+	openWin = window.open('<%=reportLink %>' , 'childForm', 'status=no, height=300, width=500, left='+ popupX + ', top='+ popupY);
+	}
+	
+function like(){
+	
+}
+</script>
 </head>
 <body>
-<div id="map" style="width:100%;height:350px;"></div>
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05ef136d44b384d69f3f6019e4fa5fcb"></script>
+<div style="float:left;" class="title1">작성자 : <%=borderInfo.getMi_nick() %> | <%=borderInfo.getBs_date() %></div> 
+<div style="float:right;" class="title2"> 조회 <%=borderInfo.getBs_read() %> <input type="button" name="police" value="신고하기" onclick="showPopup();" /></div>
+<table width="1150px" border="1">
+<tr>
+<th width=100px">제목  </th>
+<td><%=borderInfo.getBs_title() %></td>
+</tr>
+<tr>
+<th>여행 기간  </th>
+<td ><%=borderInfo.getBs_start() %> - <%=borderInfo.getBs_end() %></td>
+</tr>
+<tr>
+<th> 여행 코스  </th>
+<td>
+<% if(borderInfo.getBs_place1() != null && !borderInfo.getBs_place1().equals("")) {%>
+A. <%=borderInfo.getBs_place1() %> 
+<% } %>
+<% if(borderInfo.getBs_place2() != null && !borderInfo.getBs_place2().equals("")) {%>
+ -> B. <%=borderInfo.getBs_place2() %> 
+<% } %>
+ <% if(borderInfo.getBs_place3() != null && !borderInfo.getBs_place3().equals("")){ %>
+ ->	C. <%=borderInfo.getBs_place3() %>
+<% } %></td>
+</tr>
+<tr cellpadding="1px">
+<th>여행 지역 </th>
+<td>
+<%=bs_area %>
+</td>
+</tr>
+<tr>
+<th>성별 </th>
+<td> 
+<%=bs_gender %>
+</td>
+</tr>
+<tr>
+<th>재방문 의사 </th>
+<td> 
+<%=bs_visit %>
+</td>
+</tr>
+<!-- 이미지 추가해야 함 -->
+<tr >
+<td colspan="2">
+<%=borderInfo.getBs_content() %>
+</td>
+</tr>
+</table>
+<div id="map" style="width:1000px;height:350px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f10d748e55146b3f270d9ee2f0639ef"></script>
 <script>
 var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
     MARKER_HEIGHT = 36, // 기본, 클릭 마커의 높이
@@ -31,17 +180,19 @@ var markerSize = new kakao.maps.Size(MARKER_WIDTH, MARKER_HEIGHT), // 기본, �
     overMarkerOffset = new kakao.maps.Point(OVER_OFFSET_X, OVER_OFFSET_Y), // 오버 마커의 기준 좌표
     spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT); // 스프라이트 이미지의 크기
 
+
+    
 var positions = [  // 마커의 위치
-        new kakao.maps.LatLng(33.44975, 126.56967),
-        new kakao.maps.LatLng(33.450579, 126.56956),
-        new kakao.maps.LatLng(33.4506468, 126.5707)
+        new kakao.maps.LatLng(<%=borderInfo.getBs_lat1() %>, <%=borderInfo.getBs_lng1() %>),
+        new kakao.maps.LatLng(<%=borderInfo.getBs_lat2() %>, <%=borderInfo.getBs_lng2() %>),
+        new kakao.maps.LatLng(<%=borderInfo.getBs_lat3() %>, <%=borderInfo.getBs_lng3() %>)
     ],
     selectedMarker = null; // 클릭한 마커를 담을 변수
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(<%=borderInfo.getBs_lat1() %>, <%=borderInfo.getBs_lng1() %>), // 지도의 중심좌표
+        level: 5 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -132,5 +283,8 @@ function createMarkerImage(markerSize, offset, spriteOrigin) {
     return markerImage;
 }
 </script>
+<br />
+<input type="button" value="목록" onclick="location.href='diary_write_list';"	/>
+좋아요 총 개수 : <%=borderInfo.getBs_like() %>
 </body>
 </html>

@@ -52,9 +52,10 @@
         <div class="option">
             <div>
                 <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
                     <button type="submit">검색하기</button> 
                 </form>
+                
             </div>
         </div>
         <hr>
@@ -62,9 +63,24 @@
         <div id="pagination"></div>
     </div>
 </div>
+<p id="result"></p>
+<p><input type="button" id="select" name="select" value="선택하기" onclick="setParentText()" /></p>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f10d748e55146b3f270d9ee2f0639ef&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	1f10d748e55146b3f270d9ee2f0639ef&libraries=services"></script>
 <script>
+var num = opener.count;
+var lat = "";
+var lng = "";
+var name = "";
+function setParentText(){
+	opener.document.getElementById("name" + num + "").value = name;           
+	opener.document.getElementById("bs_place" + num + "").value = name;
+	opener.document.getElementById("bs_lat" + num + "").value = lat;
+	opener.document.getElementById("bs_lng" + num + "").value = lng;
+	window.close(); 
+}
+
+
 // 마커를 담을 배열입니다
 var markers = [];
 
@@ -75,7 +91,8 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };  
 
 // 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
@@ -102,12 +119,12 @@ function searchPlaces() {
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 function placesSearchCB(data, status, pagination) {
-	alert(status);
     if (status === kakao.maps.services.Status.OK) {
+
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
-        
+
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
 
@@ -122,7 +139,6 @@ function placesSearchCB(data, status, pagination) {
         return;
 
     }
-    
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
@@ -155,21 +171,49 @@ function displayPlaces(places) {
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
         (function(marker, title) {
-            kakao.maps.event.addListener(marker, 'click', function() {
+            kakao.maps.event.addListener(marker, 'onmouseover', function() {
                 displayInfowindow(marker, title);
-                
             });
-            kakao.maps.event.addListener(itemEl, 'click', function() {
-                displayInfowindow(itemEl, title);
+            
+            kakao.maps.event.addListener(marker, 'click', function(mouseEvent) {
+                displayInfowindow(marker, title);
+                name = title;
+                var resultDiv = document.getElementById('result'); 
+                resultDiv.innerHTML = name;
                 
+                lat = marker.getPosition().getLat(); 
+                lng = marker.getPosition().getLng();
+                
+                var resultLat = document.getElementById('resultLat'); 
+                resultLat.innerHTML = lat;
+                
+                var resultLng = document.getElementById('resultLng'); 
+                resultLng.innerHTML = lng;
             });
 
             kakao.maps.event.addListener(marker, 'mouseout', function() {
                 infowindow.close();
             });
 
-            itemEl.mouseclick =  function () {
+            itemEl.onmouseover =  function () {
                 displayInfowindow(marker, title);
+                
+            };
+            
+            itemEl.onclick =  function () {
+                displayInfowindow(marker, title);
+                name = title;
+                var resultDiv = document.getElementById('result'); 
+                resultDiv.innerHTML = name;
+                
+                lat = marker.getPosition().getLat(); 
+                lng = marker.getPosition().getLng();
+                
+                var resultLat = document.getElementById('resultLat'); 
+                resultLat.innerHTML = lat;
+                
+                var resultLng = document.getElementById('resultLng'); 
+                resultLng.innerHTML = lng;
             };
 
             itemEl.onmouseout =  function () {
@@ -187,7 +231,6 @@ function displayPlaces(places) {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
 }
-
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
@@ -237,7 +280,7 @@ function addMarker(position, idx, title) {
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
     for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
+       	 markers[i].setMap(null);
     }   
     markers = [];
 }
@@ -273,14 +316,44 @@ function displayPagination(pagination) {
     paginationEl.appendChild(fragment);
 }
 
+
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
 function displayInfowindow(marker, title) {
     var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+	
+    
     infowindow.setContent(content);
     infowindow.open(map, marker);
-    alert(infowindow.getContent(content));
+    
+    
 }
+
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+    
+    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+            
+            var content = '<div class="bAddr">' +
+                            '<span class="title">법정동 주소정보</span>' + 
+                            detailAddr + 
+                        '</div>';
+            
+            alert(result[0].road_address.address_name);
+            // 마커를 클릭한 위치에 표시합니다 
+            marker.setPosition(mouseEvent.latLng);
+            marker.setMap(map);
+
+            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+            infowindow.setContent(content);
+            
+            infowindow.open(map, marker);
+        }   
+    });
+});
+
 
  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {   
@@ -288,6 +361,7 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
+ 
 </script>
 </body>
 </html>

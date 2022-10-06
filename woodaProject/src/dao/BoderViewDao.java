@@ -71,6 +71,7 @@ public class BoderViewDao {
 				borderInfo.setBs_read(rs.getInt("bs_read"));
 				borderInfo.setMi_nick(rs.getString("mi_nick"));
 				borderInfo.setBs_date(rs.getString("bs_date"));
+				borderInfo.setBs_like(rs.getInt("bs_like"));
 			}
 		}catch(Exception e) {
 			System.out.println("BoderViewDao 클래스의 getBoderInfo() 메소드 오류");

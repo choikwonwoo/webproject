@@ -28,17 +28,17 @@ public class BoderListCtrl extends HttpServlet {
 
 		String schtype = request.getParameter("schtype");	// 검색조건(제목, 내용, 작성자, 제목+내용)
 		String keyword = request.getParameter("keyword");	// 검색어
-		String where = "";		// 검색 조건이 있을 경우 where절을 저장할 변수
+		String where = "where bs_astatus = 'y' ";		// 검색 조건이 있을 경우 where절을 저장할 변수
 		if (schtype == null || keyword == null) {
 			schtype = "";	keyword = "";
 		} else if (!schtype.equals("") && !keyword.equals("")) {	// 검색조건과 검색어가 있을 경우
 			URLEncoder.encode(keyword, "UTF-8");
 			// 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴
 			if (schtype.equals("tc")) {	// 검색조건이 '제목+내용'일 경우
-				where = " where bs_title like '%" + keyword + "%' " + 
+				where += " and bs_title like '%" + keyword + "%' " + 
 				" or bs_content like '%" + keyword + "%' ";
 			} else {
-				where = " where bs_" + schtype + " like '%" + keyword + "%' ";
+				where += " and bs_" + schtype + " like '%" + keyword + "%' ";
 			}
 		}
 		BoderListSvc boderListSvc = new BoderListSvc();
@@ -57,7 +57,7 @@ public class BoderListCtrl extends HttpServlet {
 		request.setAttribute("borderList", borderList);
 
 		RequestDispatcher dispatcher = 
-			request.getRequestDispatcher("diary_write_list.jsp");
+			request.getRequestDispatcher("diary/diary_write_list.jsp");
 		dispatcher.forward(request, response);
 	}
 

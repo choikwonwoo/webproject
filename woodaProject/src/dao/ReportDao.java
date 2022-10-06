@@ -19,12 +19,18 @@ public class ReportDao {
 		this.conn = conn;
 	}
 	public int reportInsert(ReportInfo reportInfo) {
-		int result = 0;
+		int idx = 1;	int result = 0;
 		Statement stmt = null;
+		ResultSet rs = null;		
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = "Insert into t_board_112(bs_num, mi_mail, b1_content, b1_ip) values('" + reportInfo.getBs_num() + "', 'wooda@naver.com', '" + reportInfo.getB1_content() + "', '123.123.123.123')";
+			String sql = "select max(b1_idx) from t_board_112";
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) 	idx = rs.getInt(1) + 1;
+			
+			
+			sql = "Insert into t_board_112(b1_idx, bs_num, mi_mail, b1_content, b1_ip) values(" + idx + ", '" + reportInfo.getBs_num() + "', 'wooda@naver.com', '" + reportInfo.getB1_content() + "', '123.123.123.123')";
 			result = stmt.executeUpdate(sql);
 		}catch(Exception e) {
 			System.out.println("ReportDao 클래스의 reportInsert() 메소드 오류");

@@ -23,7 +23,7 @@ $( '#num' ).append( '<input type="hidden" name="bs_num" value="' +idx +'" id="bs
 </Script>
 </head>
 <body>
-<form name="frm" action="report_proc_in" method="post" >
+<form name="frm" action="../report_proc_in" method="post" >
 <span id="num"></span>
 <table width="900px">
 <tr>

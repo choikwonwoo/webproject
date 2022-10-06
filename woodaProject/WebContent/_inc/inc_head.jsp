@@ -117,9 +117,15 @@ window.onclick = function(event) {
 			<div class="inner clearfix">
 				<h2><a href="/woodaProject/index.jsp">Woo Da</a></h2>
 				<ul class="tabs-nav">
+<<<<<<< HEAD
 					<li><a href="/woodaProject/index.jsp">여행지 추천</a></li>
 					<li><a href="write_proc_in">다이어리 쓰기</a></li>
 					<li><a href="diary_write_list">다이어리 공유</a></li>
+=======
+					<li><a href="#work01">여행지 추천</a></li>
+					<li><a href="/woodaProject/diary/diary_write_in.jsp">다이어리 쓰기</a></li>
+               		<li><a href="/woodaProject/diary_write_list">다이어리 공유</a></li>
+>>>>>>> e8117bb999c9c387a10352ad6bf0bf4ad456e61a
 					<li><a href="#work04">선물추천</a></li>
 					<% if (isLogin) {%>
 					<!-- 로그인된 상태이면 -->

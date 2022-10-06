@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ include file="../_inc/inc_head.jsp" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.*" %>
 <%@ page import="vo.*" %>
@@ -26,6 +26,13 @@ args = "&cpage=" + cpage + schargs;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+body{
+    background-color: var(--color-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #list th, #list td { padding:8px 3px; }
 #list th { border-bottom:double black 3px; }
 #list td { border-bottom:dotted black 1px; }
@@ -51,7 +58,7 @@ if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 <tr align="center">
 <a href="free_view">
 <td width="10%" rowspan="3"><%=num %></td>
-<td width="30%" rowspan="3"><%=img1 %></td>
+<td width="30%" rowspan="3"><img src="/img/<%=bl.getBs_img1() %>" /></td>
 <td ><%=title %></td>
 </tr>
 <tr align="center" width="*">
@@ -115,7 +122,7 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 %>
 </td>
 <td width="*" align="right">
-	<input type="button" value="글 등록" onclick="location.href='diary_write_in.jsp';" />
+	<input type="button" value="글 등록" onclick="location.href='diary/diary_write_in.jsp';" />
 </td>
 </tr>
 <tr><td colspan="2">
@@ -135,7 +142,7 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 		</select>
 		<input type="text" name="keyword" value="<%=keyword %>" />
 		<input type="submit" value="검색" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" value="전체글" onclick="location.href='diary_write';" />
+		<input type="button" value="전체글" onclick="location.href='diary_write_list';" />
 	</fieldset>
 	</form>
 </td></tr>
