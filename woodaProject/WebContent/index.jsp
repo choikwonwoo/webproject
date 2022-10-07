@@ -8,12 +8,26 @@
 <title>Insert title here</title>
 <style>
 .contents { width:100%; display:flex; }
-.contents .main_01 { font-size:20px; width:100%; display:initial; }
-.contents .main_01 .main_title { display:flex; width:1200px; margin:0px 13%; }
-.contents .main_01 .main_title h1 { width:1200px; margin:15px 0 25px; }
-.contents .main_01 .hotplace { display:flex; justify-content:space-around; box-sizing:content-box; padding:0px 160px 50px; text-align:center; }
+.contents .main_01 { margin:0 auto; font-size:20px; width:1150px; display:initial; border:1px solid black;  }
+.contents .main_01 .main_title { display:flex; width:1200px; margin:0px 50px; }
+.contents .main_01 .main_title span { width:1200px; margin:15px 0 25px; }
+/*
+.contents .main_01 { display:flex; justify-content:space-around; box-sizing:content-box; padding:0px 160px 50px; text-align:center; }
+*/
 .contents .hotplace div a img { border-radius:75px; }
-.contents .hotplace .text { font-size:15px; }
+.contents .hotplace { margin:0 auto; display:flex; width:1150px; justify-content:space-around; }
+
+.text { font-size:25px; }
+#aa1 { position:relative; display:inline; }
+#a1 { position:absolute; top:75px; left:55px; }
+#aa2 { position:relative; display:inline; }
+#a2 { position:absolute; top:75px; left:50px; }
+#aa3 { position:relative; display:inline; }
+#a3 { position:absolute; top:75px; left:55px; }
+#aa4 { position:relative; display:inline; }
+#a4 { position:absolute; top:75px; left:25px; }
+#aa5 { position:relative; display:inline; }
+#a5 { position:absolute; top:75px; left:55px; }
 </style>
 </head>
 <body>
@@ -21,38 +35,36 @@
 <section class="">
 	<div class="contents">
 		<div class="main_01">
-			<header class="main_title">
-				<span>인기 여행지</span>
-			</header>
+			<header class="main_title"><span>인기 여행지</span></header>
 
 			<div class="hotplace">
-				<div>
+				<div id="aa1">
 					<a href="#" class="area" id="jeju">
-					<img src="/woodaProject/img/jeju.jpg" width="170" height="170" style="opacity: 0.7;"><div class="text">제주도</div>
+					<img src="/woodaProject/img/jeju.jpg" width="170" height="170" style="opacity: 0.7;"><p id="a1" class="text">제주도</p>
 					</a>
 				</div>
 
-				<div>
+				<div id="aa2">
 					<a href="#" class="area" id="gangwon">
-					<img src="/woodaProject/img/gangwon.jpg" width="160" height="160" style="opacity: 0.7;"><div class="text">강원도</div>
+					<img src="/woodaProject/img/gangwon.jpg" width="160" height="160" style="opacity: 0.7;"><p id="a2" class="text">강원도</p>
 					</a>
 				</div>
 
-				<div>
+				<div id="aa3">
 					<a href="#" class="area" id="busan">
-					<img src="/woodaProject/img/busan.jpg" width="160" height="160" style="opacity: 0.7;"><div class="text">부산</div>
+					<img src="/woodaProject/img/busan.jpg" width="160" height="160" style="opacity: 0.7;"><p id="a3" class="text">부산</p>
 					</a>
 				</div>
 
-				<div>
+				<div id="aa4">
 					<a href="#" class="area" id="gyeongbuk">
-					<img src="/woodaProject/img/gyeongbuk.jpg" width=160 height="160" style="opacity: 0.7;"><div class="text">경상북도</div>
+					<img src="/woodaProject/img/gyeongbuk.jpg" width=160 height="160" style="opacity: 0.7;"><p id="a4" class="text">경상북도</p>
 					</a>
 				</div>
 
-				<div>
+				<div id="aa5">
 					<a href="#" class="area" id="gwangju">
-					<img src="/woodaProject/img/gwangju.jpg" width="160" height="160" style="opacity: 0.7;"><div class="text">광주</div>
+					<img src="/woodaProject/img/gwangju.jpg" width="160" height="160" style="opacity: 0.7;"><p id="a5" class="text">광주</p>
 					</a>
 				</div>
 

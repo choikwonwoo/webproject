@@ -114,37 +114,63 @@ window.onclick = function(event) {
 <body>
 <section class="work-section" id="work">
 	<header class="section-header">
-			<div class="inner clearfix">
-				<h2><a href="/woodaProject/index.jsp">Woo Da</a></h2>
-				<ul class="tabs-nav">
-<<<<<<< HEAD
-					<li><a href="/woodaProject/index.jsp">여행지 추천</a></li>
-					<li><a href="write_proc_in">다이어리 쓰기</a></li>
-					<li><a href="diary_write_list">다이어리 공유</a></li>
-=======
-					<li><a href="#work01">여행지 추천</a></li>
-					<li><a href="/woodaProject/diary/diary_write_in.jsp">다이어리 쓰기</a></li>
-               		<li><a href="/woodaProject/diary_write_list">다이어리 공유</a></li>
->>>>>>> e8117bb999c9c387a10352ad6bf0bf4ad456e61a
-					<li><a href="#work04">선물추천</a></li>
-					<% if (isLogin) {%>
-					<!-- 로그인된 상태이면 -->
-					<li><a>
-					<div class="dropdown">
+		<div class="inner clearfix">
+			<h2><a href="/woodaProject/index.jsp">Woo Da</a></h2>
+			<ul class="tabs-nav">
+				<li><a href="/woodaProject/index.jsp">여행지 추천</a></li>
+				<li><a href="write_proc_in">다이어리 쓰기</a></li>
+				<li><a href="diary_write_list">다이어리 공유</a></li>
+				<li><a href="#work04">선물추천</a></li>
+				<% if (isLogin) {%>
+				<!-- 로그인된 상태이면 -->
+				<li><a>
+				<div class="dropdown">
 					<button onclick="myFunction()" class="dropbtn">프로필</button>
-			  			<div id="myDropdown" class="dropdown-content">
-			    			<a href="my_page">마이페이지</a>
-			    			<a href="#">설정</a>
-			    			<a href="/woodaProject/logout.jsp">로그아웃</a>
-			  			</div>
-					</div></a></li>
+		  			
+		  		<div id="myDropdown" class="dropdown-content">
+					<table class="slideT1" width="250" height="100" border="0" cellspacing="1">
+						<tr align="center">
+						<td rowspan="2" width="45%" style="color: black;">프로필사진</td>
+						<td style="color: black;">디데이</td>
+						</tr>
+						<tr align="center">
+						<td style="color: black;">닉네임</td>
+						</tr>
+					</table>
 					
-					<% } else { %>
-					<!-- 로그인이 안 된 상태이면 -->
-					<li><a href = "login_form.jsp" class="bold">로그인</a></li>
-					<% } %>
-				</ul>
-			</div>
+					<table class="slideT2" width="250" height="150" border="0" cellspacing="1">
+						<tr align="center">
+						<td colspan="2" height="60%" style="color: black;">알림이미지</td>
+						</tr>
+						<tr align="center">
+						<td colspan="2" height="20%" style="color: black;">알림메세지1</td>
+						</tr>
+						<tr align="center">
+						<td colspan="2" height="20%" style="color: black;">알림메세지2</td>
+						</tr>
+					</table>
+					
+					<table class="slideT3" width="300" height="60" border="0" cellspacing="1">
+						<tr align="center">
+						<td height="33%"><a href="my_page">마이페이지</a></td>
+						</tr>
+						<tr align="center">
+						<td height="33%"><a href="#">설 정</a></td>
+						</tr>
+						<tr align="center">
+						<td height="34%"><a href="/woodaProject/logout.jsp">로그아웃</a></td>
+						</tr>
+					</table>
+		    		
+		  			</div>
+				</div></a></li>
+				
+				<% } else { %>
+				<!-- 로그인이 안 된 상태이면 -->
+				<li><a href = "login_form.jsp" class="bold">로그인</a></li>
+				<% } %>
+			</ul>
+		</div>
 	</header>
 </section>
 
