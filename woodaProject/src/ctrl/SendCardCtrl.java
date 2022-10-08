@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 import svc.*;
 import vo.*;
 
-@WebServlet("/card")
+@WebServlet("/s_card")
 public class SendCardCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -19,14 +19,14 @@ public class SendCardCtrl extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		String dding = request.getParameter("dding");
+		String mi_name_s = request.getParameter("name");
 		String writerEmail = request.getParameter("writerEmail");
 		String inputEmail = request.getParameter("inputEmail");
 		String dDay = request.getParameter("dDay");
 		String shortMsg = request.getParameter("shortMsg");
 		
 		CoupleMailing cm = new CoupleMailing();
-		cm.setDding(dding);
+		cm.setMi_name_s(mi_name_s);
 		cm.setCm_mail_r(inputEmail);
 		cm.setCm_mail_s(writerEmail);
 		cm.setCm_sdate(dDay);

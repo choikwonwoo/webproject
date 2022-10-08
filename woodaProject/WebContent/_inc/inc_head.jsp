@@ -13,7 +13,6 @@ if (loginInfo != null) isLogin = true;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 /* Base */
 html {
 	font-family: "Ropa Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
@@ -31,7 +30,6 @@ li a:hover { background: #333; color: #fff; }
 img { vertical-align: middle; }
 .clearfix:before, .clearfix:after { content: " "; display: table; }
 .clearfix:after { clear: both; }
-
 /* Work section */
 .work-section {
 	background-color: #ffea92; position: relative; z-index: 10; 
@@ -64,28 +62,20 @@ img { vertical-align: middle; }
 	}
 .work-section .tabs-nav .ui-tabs-active a { color: rgb(255, 255, 255); }
 .work-section { position:sticky; top:0px; }
-
 /* Dropdown Button */
 .dropbtn { background-color:#ffea92; color:black; padding:24px; font-size:16px; cursor:pointer; width:120px; border:none; }
-
 /* Dropdown button on hover & focus */
 .dropbtn:hover, .dropbtn:focus { background-color:#333; color:white; }
-
 /* The container <div> - needed to position the dropdown content */
 .dropdown { position:relative; display:inline-block; }
-
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content { display:none; position:absolute; background-color:#f9f9f9; min-width:160px; box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2); }
-
 /* Links inside the dropdown */
 .dropdown-content a { color:black; padding:12px 16px; text-decoration:none; display:block; }
-
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover { background-color:#f1f1f1 }
-
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show { display:block; }
-
 </style>
 
 <script>
@@ -93,11 +83,9 @@ img { vertical-align: middle; }
 function myFunction() {
 	document.getElementById("myDropdown").classList.toggle("show");
 }
-
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
-
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -107,6 +95,19 @@ window.onclick = function(event) {
       }
     }
   }
+}
+var openWin;            
+function showMemo() {
+    var _width = '650';
+    var _height = '380';
+	// window.name = "부모창 이름";  
+ 	window.name = "myPage";  
+    // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+    var _left = Math.ceil(( window.screen.width - _width )/2);
+    var _top = Math.ceil(( window.screen.height - _height )/2); 
+ 	// window.open("open할 window", "자식창 이름", "팝업창 옵션");
+    openWin = window.open("r_card","receiveCard","top=" + _top + ",left=" + _left + ",width=400,height=400");
+ 
 }
 </script>
 
@@ -167,10 +168,11 @@ window.onclick = function(event) {
 				
 				<% } else { %>
 				<!-- 로그인이 안 된 상태이면 -->
-				<li><a href = "login_form.jsp" class="bold">로그인</a></li>
+				<li><a href = "/woodaProject/login_form.jsp" class="bold">로그인</a></li>
 				<% } %>
 			</ul>
 		</div>
 	</header>
 </section>
+
 

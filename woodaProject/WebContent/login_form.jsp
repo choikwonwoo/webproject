@@ -45,7 +45,7 @@ if (url == null) url = "index.jsp"; // 주소가 없는 경우 메인화면 지�
     display: block;
     margin-bottom: 3px;
     padding: 3px;
-    border: 1px solid lightgray;
+    border: 1px solid #ffea92 ;
     border-radius: 3px;
 }
 
@@ -68,10 +68,10 @@ if (url == null) url = "index.jsp"; // 주소가 없는 경우 메인화면 지�
         <div class="container">
             <input type="text" name="uid" id="uid" value="wooda@naver.com" class="account"/>
             <input type="password" name="pwd" id="pwd" value="1234" class="account"/>
-            <input type="submit" id="login" value="로그인" class="account"/>
+            <input type="submit" id="login_form.jsp" value="로그인" class="account"/>
             <hr />
-            <button id="pw" class="account">비밀번호 찾기</button>
-            <button id="join" class="account">회원가입</button>
+            <button id="pwd" class="account">비밀번호 찾기</button>
+            <input type="button" id="login" value="회원가입" onclick="location.href='/woodaProject/member/join_member.jsp'"/>
             
             <p id="alert" class="account"> </p>
         </div>

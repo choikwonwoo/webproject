@@ -1,7 +1,7 @@
 package vo;
 
 public class CoupleMailing {
-	private String cm_mail_s, cm_mail_r, cm_content, cm_jdate, cm_sdate, cm_isok, cm_ydate;
+	private String cm_mail_s, mi_name_s, cm_mail_r, mi_name_r, cm_content, cm_jdate, cm_sdate, cm_isok, cm_ydate;
 	private String dding;
 	
 	public String getDding() {
@@ -66,5 +66,21 @@ public class CoupleMailing {
 
 	public void setCm_ydate(String cm_ydate) {
 		this.cm_ydate = cm_ydate;
+	}
+
+	public String getMi_name_s() {
+		return mi_name_s;
+	}
+
+	public void setMi_name_s(String mi_name_s) {
+		this.mi_name_s = mi_name_s;
+	}
+
+	public String getMi_name_r() {
+		return mi_name_r;
+	}
+
+	public void setMi_name_r(String mi_name_r) {
+		this.mi_name_r = mi_name_r;
 	}
 }

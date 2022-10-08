@@ -70,7 +70,7 @@ function openSendCard() {
 <td align="left"><input type="button" value="연인을 등록하세요" onclick="openSendCard()"/></td>
 </tr>
 </table>
-<input type=button name=profileModify value="프로필 수정" />
+<input type=button name=profileModify value="프로필 수정" onclick="location.href='mypage/my_page_up.jsp'"/>
 </div>
 <hr/>
 <div id="couplePostZone">

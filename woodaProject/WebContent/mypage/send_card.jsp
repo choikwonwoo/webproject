@@ -54,10 +54,11 @@ function chkDupId(uid){
 </head>
 <body>
 
-<form name="frmSend" action="../card" method="post">
+<form name="frmSend" action="../s_card" method="post">
 <input type="hidden" id="dupChk" value="n"/>
-<input type="hidden" id="writerEmail" name="writerEmail" value="<%=loginInfo.getMi_mail()%>"/>
-<input type="hidden" id="dding" name="dding" value="<%=loginInfo.getMi_dding()%>"/>
+<input type="hidden" name="mi_name_s" value="<%=loginInfo.getMi_name() %>"/>
+<input type="hidden" name="writerEmail" name="writerEmail" value="<%=loginInfo.getMi_mail()%>"/>
+<input type="hidden" name="dding" name="dding" value="<%=loginInfo.getMi_dding()%>"/>
 <table width="390" height="380" Style="border:solid 1px black; margin-left:auto; margin-right:auto; text-align:center">
 <tr><td id="sendTitle">우리들의 다이어리</td></tr>
 <tr><td id="sendInfoMsg">등록할 연인의 정보를 입력해주세요.</td></tr>
