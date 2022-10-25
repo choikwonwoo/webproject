@@ -156,7 +156,7 @@ function test(){
 
 </script>
 <style>
-.diaryinform {
+body{
     background-color: var(--color-black);
     display: flex;
     flex-direction: column;
@@ -169,7 +169,6 @@ textarea {
 </style>
 </head>
 <body>
-<div class="diaryinform">
 <form name="frm" action="write_proc_in" method="post" onsubmit="return test()" >
 <table width="700px" border="1">
 <tr>
@@ -222,79 +221,7 @@ textarea {
 </tr>
 <tr>
 <td colspan="2"/>
-<input type="file" name="bs_img1" onchange="readURL1(this);" >
-<input type="file" name="bs_img2" onchange="readURL2(this);" >
-<input type="file" name="bs_img3" onchange="readURL3(this);" >
-<input type="file" name="bs_img4" onchange="readURL4(this);" >
-<input type="file" name="bs_img5" onchange="readURL5(this);" >
-<br />
-<img id="preview1" />
-<br />
-<img id="preview2" />
-<br />
-<img id="preview3" />
-<br />
-<img id="preview4" />
-<br />
-<img id="preview5" />
-<br />
-<script>
-function readURL1(input) {
-	if (input.files && input.files[0]) {
-    	var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview1').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	} else {
-	    document.getElementById('preview1').src = "";
-	  }
-}
-function readURL2(input) {
-	if (input.files && input.files[0]) {
-    	var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview2').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	} else {
-	    document.getElementById('preview2').src = "";
-	  }
-}
-function readURL3(input) {
-	if (input.files && input.files[0]) {
-    	var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview3').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	} else {
-	    document.getElementById('preview3').src = "";
-	  }
-}
-function readURL4(input) {
-	if (input.files && input.files[0]) {
-    	var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview4').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	} else {
-	    document.getElementById('preview4').src = "";
-	  }
-}
-function readURL5(input) {
-	if (input.files && input.files[0]) {
-    	var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview5').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	} else {
-	    document.getElementById('preview5').src = "";
-	  }
-}
-</script>
+<input type="file" name="bs_img1" />
 </tr>
 <tr >
 <td colspan="2">
@@ -317,6 +244,5 @@ function readURL5(input) {
 <input type="reset" value="다시입력" style="width:100px; height:30px;" /> 
 </p>
 </form>
-</div>
 </body>
 </html>

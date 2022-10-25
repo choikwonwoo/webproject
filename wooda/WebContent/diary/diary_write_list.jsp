@@ -29,10 +29,10 @@ args = "&cpage=" + cpage + schargs;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.diarylistform img {
+img {
 width:100px; height:80px
 }
-.diarylistform{
+body{
     background-color: var(--color-black);
     display: flex;
     flex-direction: column;
@@ -59,7 +59,7 @@ select {
 </style>
 </head>
 <body>
-<div class="diarylistform">
+<h2>자유 게시판 목록</h2>
 <table width="700px" cellpadding="5" >
 	<tr><td align="left">
 		<select name="o" onchange="location.href='diary_write_list?cpage=<%=cpage %>&o=' + this.value;" >
@@ -157,7 +157,7 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 %>
 </td>
 <td width="*" align="right">
-	<input type="button" value="글 등록" onclick="location.href='/woodaProject/diary_form_in';" />
+	<input type="button" value="글 등록" onclick="location.href='diary/diary_write_in.jsp';" />
 </td>
 </tr>
 <tr><td colspan="2">
@@ -182,6 +182,5 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 	</form>
 </td></tr>
 </table>
-</div>
 </body>
 </html>

@@ -1,13 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<%@ include file="../_inc/inc_head.jsp" %>
-<%@ page import="java.util.*" %>
-<%@ page import="java.time.*" %>
-<%@ page import="vo.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../_inc/inc_side.jsp" %>
 <%
-	request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("utf-8");
 ArrayList<BorderInfo> borderList = (ArrayList<BorderInfo>)request.getAttribute("borderList");
-
-// 자유게시판 글목록이 들어있는 ArrayList<FreeList>를 형변환하여 받아옴
 PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
 
 String o = pageInfo.getO();
@@ -23,70 +18,100 @@ if (schtype != null && !schtype.equals("") && keyword != null && !keyword.equals
 }
 args = "&cpage=" + cpage + schargs;
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
-.diarylistform img {
-width:100px; height:80px
-}
-.diarylistform{
-    background-color: var(--color-black);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-#list th, #list td { padding:8px 3px; }
-#list th { border-bottom:double black 3px; }
-#list td { border-bottom:dotted black 1px; }
-option{
-  width: 200px;
-  height : 50px;
-  padding: .8em .5em;
-  font-family: inherit;
-}
-select {
-  width: 200px; 
-  height : 50px;
-  padding: .8em .5em; 
-  font-family: inherit;
-  font-size:auto;
-}
+.topbtn { width:1200px; margin-top:50px; margin-bottom:20px; text-align:right;}
+.btnReport { width:100px; height:40px; font-size:12px; font-weight:bold; margin-right:10px; }
 
 </style>
-</head>
-<body>
-<div class="diarylistform">
-<table width="700px" cellpadding="5" >
-	<tr><td align="left">
-		<select name="o" onchange="location.href='diary_write_list?cpage=<%=cpage %>&o=' + this.value;" >
-			<option value="a" <% if (o.equals("a")) { %>selected="selected"<%} %>>최근 게시글</option>
-			<option value="b" <% if (o.equals("b")) { %>selected="selected"<%} %>>오래된 게시글</option>
-			<option value="c" <% if (o.equals("c")) { %>selected="selected"<%} %>>인기 게시글</option>
-		</select> &nbsp;&nbsp;&nbsp;
-	</td></tr>
-	</table>
-<table width="700" border="0" cellpadding="0" cellspacing="0" id="list">
-<tr height="30">
-<th width="10%">글 번호</th><th width="30%">사진</th><th width="*">제목 + 날짜 + 코스</th>
-</tr>
+<script>
+function boardDel(bsnum) {
+	if (confirm("정말 삭제하시겠습니까?")) {
+		$.ajax({
+			type : "POST", 
+			url : "/wdAdmin/board_proc_del", 
+			data : {"bsnum" : bsnum}, 
+			success : function(chkRs) {
+				if (chkRs == 0) {
+					alert("게시글 삭제에 실패했습니다.\n다시 시도하세요.");
+				}
+				location.reload();
+			}
+		});
+	}
+}
+	
+function chkDel() {
+	var bsnum = getSelectedValues();
+	// 선택한값들이 쉼표를 기준으로 '1,2,3,4' 문자열로 저장됨
+	if (bsnum == "") {
+		alert("삭제할 게시글을 선택하세요.");
+	} else {
+		boardDel(bsnum);
+	}
+}
+
+function boardUp(bsnum) {		
+	$.ajax({
+			type : "POST", 
+			url : "/wdAdmin/board_proc_up", 
+			data : {"bsnum" : bsnum }, 
+			success : function(chkRs) {
+				if (chkRs == 0) {
+					alert("게시글 상태 변경에 실패했습니다.\n다시 시도하세요.");
+				}
+				location.reload();
+			}
+		});
+	}
+	
+function getSelectedValues() {
+	// 체크박스들 중 선택된 체크박스들의 값들을 쉼표로 구분하여 문자열로 리턴하는 함수
+		var chk = document.frmBoardStatus.chk; 
+		var idxs = "";	
+		for (var i = 0 ; i < chk.length ; i++) {
+			if (chk[i].checked)	idxs += "," + chk[i].value;
+		}
+	
+		return idxs.substring(1);
+	}
+
+function chkN(bsnum) {
+	var bsnum = getSelectedValues();
+	if (bsnum == "") {
+		alert("상태 변경할 게시글을 선택하세요.");
+	} else {
+		boardUp(bsnum);
+	}
+}
+
+</script>
+<div class="content" align="center" >
+<form name="frmBoardStatus">
+<input type="hidden" name="chk" />
+<div class="topbtn">
+	<input type="button" class="btnReport" value="게시글 삭제" onclick="chkDel();" />
+	<input type="button" class="btnReport" value="게시글 상태변경" onclick="chkN();" />
+</div>
+<div class="boardList">
+<table width="1200" border="0" cellpadding="5" cellspacing="0" id="list">
+	<tr>
+		<th></th><th>게시글 번호</th><th>게시글 상태</th><th>사진</th><th>제목 + 날짜 + 코스</th>
+	</tr>
 <%
-	if (borderList.size() > 0) {	// 게시할 글목록이 있으면
+if (borderList.size() > 0) {	// 게시할 글목록이 있으면
 	int num = rcnt - (psize * (cpage - 1));
 	for (int i = 0 ; i < borderList.size() ; i++) {
 		BorderInfo bl = borderList.get(i);
 		String title = bl.getBs_title();
 		String img1 = bl.getBs_img1();
 		if (title.length() > 30)	title = title.substring(0, 27) + "...";
-		title = "<a href='diary_write_view?idx=" + bl.getBs_num() + args + "'>" + title + "</a>";
-		img1 = "<a href='diary_write_view?idx=" + bl.getBs_num() + args + "'>" + img1 + "</a>";
+		title = "<a href='board_view?idx=" + bl.getBs_num() + args + "'>" + title + "</a>";
+		img1 = "<a href='board_view?idx=" + bl.getBs_num() + args + "'>" + img1 + "</a>";
 %>
-<tr align="center">
-<a href="free_view" >
-<td width="10%" rowspan="3"><%=num %></td>
+<tr align="center" height="30">
+	<td rowspan="3"><input type="checkbox" name="chk" value="<%=bl.getBs_num() %>" id="selectboard + <%=i %>" /></td>
+	<td width="10%" rowspan="3"><%=bl.getBs_num() %></td>
+	<td rowspan="3"><%=bl.getBs_isview() %></td>
 <td width="30%" rowspan="3">
 <% if(bl.getBs_img1().equals("")) { %>
 <img src="img\trival.jpg" />
@@ -96,7 +121,7 @@ select {
 </td>
 <td ><%=title %></td>
 </tr>
-<tr align="center" width="*">
+<tr align="center" >
 <td>여행 기간 : <%=bl.getBs_start() %>~<%=bl.getBs_end() %></td>
 </tr>
 <tr align="center">
@@ -109,7 +134,8 @@ select {
 <% } %>
 </td>
 </tr>
-</a>
+</tr>
+
 <%
 		num--;
 	}
@@ -119,23 +145,23 @@ select {
 }
 %>
 </table>
+</div>
+</form>
 <br />
-<table width="700" cellpadding="5">
-<tr>
+<table width="1200" cellpadding="5">
+<tr align="center">
 <td width="600">
 <%
 if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
-	String lnk = "diary_write_list?cpage=";
+	String lnk = "index_board?cpage=";
 	pcnt = rcnt / psize;
 	if (rcnt % psize > 0)	pcnt++;	// 전체 페이지 수
-
 	if (cpage == 1) {
 		out.println("[처음]&nbsp;&nbsp;&nbsp;[이전]&nbsp;&nbsp;");
 	} else {
 		out.println("<a href='" + lnk + "1" + schargs + "'>[처음]</a>&nbsp;&nbsp;&nbsp;");
 		out.println("<a href='" + lnk + (cpage - 1) + schargs + "'>[이전]</a>&nbsp;&nbsp;");
 	}
-
 	spage = (cpage - 1) / bsize * bsize + 1;	// 현재 블록에서의 시작 페이지 번호
 	for (int i = 1, j = spage ; i <= bsize && j <= pcnt ; i++, j++) {
 	// i : 블록에서 보여줄 페이지의 개수만큼 루프를 돌릴 조건으로 사용되는 변수
@@ -146,7 +172,6 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 			out.println("&nbsp;<a href='" + lnk + j + schargs + "'>" + j + "</a>&nbsp;");
 		}
 	}
-
 	if (cpage == pcnt) {
 		out.println("&nbsp;&nbsp;[다음]&nbsp;&nbsp;&nbsp;[마지막]");
 	} else {
@@ -156,14 +181,10 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 }
 %>
 </td>
-<td width="*" align="right">
-	<input type="button" value="글 등록" onclick="location.href='/woodaProject/diary_form_in';" />
-</td>
 </tr>
-<tr><td colspan="2">
+<tr align="center">
+<td colspan="3">
 	<form name="frmSch" method="get">
-	<fieldset>
-		<legend>게시판 검색</legend>
 		<select name="schtype">
 			<option value="">검색 조건</option>
 			<option value="title" 
@@ -175,10 +196,9 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 			<option value="tc" 
 			<% if (schtype.equals("tc")) { %>selected="selected"<% } %>>제목+내용</option>
 		</select>
-		<input type="text" name="keyword" value="<%=keyword %>" />
+		<input type="text" name="keyword" value="<%=keyword %>" style="width:500px;" />
 		<input type="submit" value="검색" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" value="전체글" onclick="location.href='diary_write_list';" />
-	</fieldset>
+		<input type="button" value="전체글" onclick="location.href='index_board';" />
 	</form>
 </td></tr>
 </table>

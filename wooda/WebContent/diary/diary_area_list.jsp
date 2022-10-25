@@ -5,7 +5,9 @@
 <%@ page import="vo.*" %>
 <%
 	request.setCharacterEncoding("utf-8");
-ArrayList<BorderInfo> borderList = (ArrayList<BorderInfo>)request.getAttribute("borderList");
+ArrayList<BorderInfo> AreaList = (ArrayList<BorderInfo>)request.getAttribute("AreaList");
+
+String bs_area = (String)request.getAttribute("bs_area");
 
 // 자유게시판 글목록이 들어있는 ArrayList<FreeList>를 형변환하여 받아옴
 PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
@@ -22,6 +24,42 @@ if (schtype != null && !schtype.equals("") && keyword != null && !keyword.equals
 	// 검색조건과 검색어가 있으면 검색관련 데이터들을 쿼리스트링으로 지정
 }
 args = "&cpage=" + cpage + schargs;
+
+String list = "";
+switch(bs_area){
+case "a" : list = "서울";
+break;
+case "b" : list = "경기";
+break;
+case "c" : list = "인천";
+break;
+case "d" : list = "대구";
+break;
+case "e" : list = "충청북도";
+break;
+case "f" : list = "충청남도";
+break;
+case "g" : list = "전라북도";
+break;
+case "h" : list = "전라남도";
+break;
+case "i" : list = "강원도";
+break;
+case "j" : list = "광주";
+break;
+case "k" : list = "대전";
+break;
+case "l" : list = "울산";
+break;
+case "m" : list = "부산";
+break;
+case "n" : list = "제주도";
+break;
+case "o" : list = "경상북도";
+break;
+case "p" : list = "경상남도";
+break;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -29,10 +67,10 @@ args = "&cpage=" + cpage + schargs;
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.diarylistform img {
+img {
 width:100px; height:80px
 }
-.diarylistform{
+body{
     background-color: var(--color-black);
     display: flex;
     flex-direction: column;
@@ -59,10 +97,10 @@ select {
 </style>
 </head>
 <body>
-<div class="diarylistform">
+<h2><%=list %></h2>
 <table width="700px" cellpadding="5" >
 	<tr><td align="left">
-		<select name="o" onchange="location.href='diary_write_list?cpage=<%=cpage %>&o=' + this.value;" >
+		<select name="o" onchange="location.href='diary_AreaList?cpage=<%=cpage %>&o=' + this.value;" >
 			<option value="a" <% if (o.equals("a")) { %>selected="selected"<%} %>>최근 게시글</option>
 			<option value="b" <% if (o.equals("b")) { %>selected="selected"<%} %>>오래된 게시글</option>
 			<option value="c" <% if (o.equals("c")) { %>selected="selected"<%} %>>인기 게시글</option>
@@ -74,10 +112,10 @@ select {
 <th width="10%">글 번호</th><th width="30%">사진</th><th width="*">제목 + 날짜 + 코스</th>
 </tr>
 <%
-	if (borderList.size() > 0) {	// 게시할 글목록이 있으면
+	if (AreaList.size() > 0) {	// 게시할 글목록이 있으면
 	int num = rcnt - (psize * (cpage - 1));
-	for (int i = 0 ; i < borderList.size() ; i++) {
-		BorderInfo bl = borderList.get(i);
+	for (int i = 0 ; i < AreaList.size() ; i++) {
+		BorderInfo bl = AreaList.get(i);
 		String title = bl.getBs_title();
 		String img1 = bl.getBs_img1();
 		if (title.length() > 30)	title = title.substring(0, 27) + "...";
@@ -125,7 +163,8 @@ select {
 <td width="600">
 <%
 if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
-	String lnk = "diary_write_list?cpage=";
+	String lnk = "diary_area_list?cpage=";
+	String lnk1 = "&bs_area=";
 	pcnt = rcnt / psize;
 	if (rcnt % psize > 0)	pcnt++;	// 전체 페이지 수
 
@@ -143,7 +182,7 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 		if (cpage == j) {
 			out.println("&nbsp;<strong>" + j + "</strong>&nbsp;");
 		} else {
-			out.println("&nbsp;<a href='" + lnk + j + schargs + "'>" + j + "</a>&nbsp;");
+			out.println("&nbsp;<a href='" + lnk + j + lnk1 + bs_area + schargs + "'>" + j + "</a>&nbsp;");
 		}
 	}
 
@@ -157,7 +196,7 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 %>
 </td>
 <td width="*" align="right">
-	<input type="button" value="글 등록" onclick="location.href='/woodaProject/diary_form_in';" />
+	<input type="button" value="글 등록" onclick="location.href='diary/diary_write_in.jsp';" />
 </td>
 </tr>
 <tr><td colspan="2">
@@ -182,6 +221,5 @@ if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
 	</form>
 </td></tr>
 </table>
-</div>
 </body>
 </html>
